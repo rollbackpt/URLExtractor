@@ -2,7 +2,7 @@
 
 require_once '../URLExtractor/urlextractor.class.php';
 
-$urlEmbed = new UrlExtractor('http://aharpa.pt/paginas/eventos/');
+$urlEmbed = new UrlExtractor('http://jpaul.me/?p=4077');
 $urlEmbed->extractAll();
 
 echo 'title -> <pre>';
