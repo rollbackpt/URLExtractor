@@ -1,0 +1,39 @@
+<html>
+	<head>
+		<title>URL Extractor Demo</title>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+		<script>
+			$(document).ready(function() {
+				$("#form_url").submit(function(e) {	
+					e.preventDefault();
+					$.ajax({
+					  type: "POST",
+					  url: "urlinfo.php",
+					  dataType: "json",
+					  data: { url: $("#url").val()}
+					}).done(function(msg) {
+						$("#url_title").html(msg.title);
+						$("#url_description").html(msg.description);
+						$("#url_keywords").html(msg.keywords.join(", "));
+						$("#url_images").html('<br/>' + msg.images.join("<br/>"));
+					});
+					
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<div id="content" style="width: 500px; margin: 150px auto; border: black solid 1px; padding: 10px; border-radius: 5px;">
+			<form action="urlinfo.php" method="post" id="form_url" style="width: 320px; margin: 0px auto;">
+				<input type="text" name="url" id="url"/>
+				<input type="submit" value="Get Info" />
+			</form>			
+			<div id="url_info" style="margin-top: 20px;">
+				<span style="font-weight: bold;">Title: </span> <span id="url_title"> </span> <br/><br/>
+				<span style="font-weight: bold;">Descriptions: </span> <span id="url_description"> </span> <br/><br/>
+				<span style="font-weight: bold;">keywords: </span> <span id="url_keywords"> </span> <br/><br/>
+				<span style="font-weight: bold;">Images: </span> 	<span id="url_images"> </span> <br/><br/>
+			</div>
+		</div>
+	</body>
+</html>

@@ -119,6 +119,15 @@ Class UrlExtractor {
 
 			$this->getImages($urlContent);
 
+			/*@TODO: Return JSON Object here */
+			$urlInfo = array(
+				'title' => $this->title,
+				'description' => $this->description,
+				'keywords' => $this->keywords,
+				'images' => $this->images
+			);
+			
+			return json_encode($urlInfo);
 		}
 	}
 	
@@ -224,7 +233,17 @@ Class UrlExtractor {
 					if (is_array($this->$key)) {
 						
 						if (!empty($metaTags[$value])) {
-							array_push($this->$key, $metaTags[$value]);
+							
+							// Hard coded rule to split keywords by ","
+							if ($key == 'keywords') {
+								$metaTags[$value] = explode(",", $metaTags[$value]);
+								foreach ($metaTags[$value] as $v) {
+									array_push($this->$key, trim($v));
+								}
+							} else {
+								array_push($this->$key, $metaTags[$value]);
+							}
+							
 						}
 					} else {
 						
