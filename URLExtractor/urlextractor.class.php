@@ -101,11 +101,11 @@ Class UrlExtractor {
 	 * 
 	 * Extract all the elements from the URL
 	 * (title, description, keywords and images)
-	 *
+	 * 
 	 * @return void
 	 */
 	public function extractAll() {
-		$urlContent = @file_get_contents($this->url);
+		$urlContent = @file_get_contents($this->url); 
 
 		if ($urlContent !== FALSE) {
 			
@@ -129,6 +129,8 @@ Class UrlExtractor {
 			
 			return json_encode($urlInfo);
 		}
+		
+		return json_encode(array('error' => 'Invalid URL'));
 	}
 	
 	/**

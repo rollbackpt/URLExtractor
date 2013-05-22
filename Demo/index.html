@@ -8,9 +8,10 @@
 					e.preventDefault();
 					$.ajax({
 					  type: "POST",
+					  contentType: 'application/json',
 					  url: "urlinfo.php",
 					  dataType: "json",
-					  data: { url: $("#url").val()}
+					  data: { url: $("#url").val() }
 					}).done(function(msg) {
 						$("#url_title").html(msg.title);
 						$("#url_description").html(msg.description);
