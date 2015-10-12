@@ -83,6 +83,7 @@ class UrlExtractor
         ),
         'images' => array(
             'twitter:image',
+            'twitter:image:src',
             'og:image'
         )
     );
@@ -143,8 +144,10 @@ class UrlExtractor
             $urlInfo = array(
                 'title' => $this->title,
                 'description' => $this->description,
-                'keywords' => $this->keywords,
-                'images' => $this->images
+                // Before assign, remove duplicate images and reorder the array
+                'keywords' => array_values(array_unique($this->keywords)),
+                // Before assign, remove duplicate images and reorder the array
+                'images' => array_values(array_unique($this->images))
             );
 
             return ($json) ? json_encode($urlInfo) : $urlInfo;
@@ -210,10 +213,9 @@ class UrlExtractor
     */
     protected function getMetaTagsByProperty($urlContent)
     {
-        $propretyRuleString = $this->getPropertyRuleString();
+        $pattern = '/<meta.*?property=["|\'](.*?)["|\'][^<]*?content=["|\'](.*?)["|\'].*?>|';
+        $pattern .= '<meta.*?content=["|\'](.*?)["|\'][^<]*?property=["|\'](.*?)["|\'].*?>/i';
 
-        $pattern = '/<meta.*?property=["|\'](' . $propretyRuleString . ')["|\'].*?content=["|\'](.*?)["|\'].*?>|';
-        $pattern .= '<meta.*?content=["|\'](.*?)["|\'].*?property=["|\'](' . $propretyRuleString . ')["|\'].*?>/i';
         preg_match_all($pattern, $urlContent, $results);
 
         $metaTags = $this->formatMetaTagsArray($results);

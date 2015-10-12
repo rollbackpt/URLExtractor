@@ -1,41 +1,122 @@
-<html>
-	<head>
-		<title>URL Extractor Demo</title>
-		<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
-		<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-		<script>
-			$(document).ready(function() {
-				$("#form_url").submit(function(e) {
-					e.preventDefault();
-					$.ajax({
-					  type: "POST",
-					  url: "urlinfo.php",
-					  dataType: "json",
-					  data: $("#form_url").serialize()
-					}).done(function(msg) {
-						console.log(msg)
-						$("#url_title").html(msg.title);
-						$("#url_description").html(msg.description);
-						$("#url_keywords").html(msg.keywords.join(", "));
-						$("#url_images").html('<br/>' + msg.images.join("<br/>"));
-					});
+<!DOCTYPE html>
+<!--[if IE 8]> <html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js" lang="en" >
+<!--<![endif]-->
 
-				});
-			});
-		</script>
-	</head>
-	<body>
-		<div id="content" style="width: 500px; margin: 150px auto; border: black solid 1px; padding: 10px; border-radius: 5px;">
-			<form action="urlinfo.php" method="post" id="form_url" style="width: 320px; margin: 0px auto;">
-				<input type="text" name="url" id="url"/>
-				<input type="submit" value="Get Info" />
-			</form>
-			<div id="url_info" style="margin-top: 20px;">
-				<span style="font-weight: bold;">Title: </span> <span id="url_title"> </span> <br/><br/>
-				<span style="font-weight: bold;">Descriptions: </span> <span id="url_description"> </span> <br/><br/>
-				<span style="font-weight: bold;">keywords: </span> <span id="url_keywords"> </span> <br/><br/>
-				<span style="font-weight: bold;">Images: </span> 	<span id="url_images"> </span> <br/><br/>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width" />
+	<title>URL Extractor Demo</title>
+	<!-- Latest compiled and minified CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	<!-- Optional theme -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap-theme.min.css">
+</head>
+<body>
+
+	<div class="container" style="margin-top: 50px;">
+
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<form id="form_url">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="form-group">
+								<input type="text" class="form-control" id="url" name="url" placeholder="Url to extract info...">
+							</div>
+						</div>
+					</div>
+					<div class="row" id="url_info" style="display: none;">
+						<div class="col-md-12">
+							<div class="row" style="margin-left: 3px; margin-bottom: 5px;">
+								<span style="font-weight: bold;">Title: </span> <span id="url_title"> </span>
+							</div>
+							<div class="row" style="margin-left: 3px; margin-bottom: 5px;">
+								<span style="font-weight: bold;">Descriptions: </span> <span id="url_description"> </span>
+							</div>
+							<div class="row" style="margin-left: 3px; margin-bottom: 5px;">
+								<span style="font-weight: bold;">keywords: </span> <span id="url_keywords"> </span>
+							</div>
+                            <div class="row" style="margin-left: 3px; margin-bottom: 2px;">
+                                <span style="font-weight: bold;">Images: </span>
+    						</div>
+                            <div class="row" style="margin-left: 3px; margin-bottom: 10px;" id="images_div">
+                            </div>
+						</div>
+					</div>
+                    <div class="row" id="url_loading" style="display: none;">
+        				<div class="col-md-12">
+        					<img id="loading_gif" src="assets/img/loading.gif" style="display: block; margin: 10px auto; width: 80px; height: 80px;">
+        				</div>
+        			</div>
+                    <div class="row" id="url_error" style="display: none;">
+        				<div class="col-md-12">
+        					<span id="error_msg" style="display: block; width: 100%; text-align: center; color: red;"> </span>
+        				</div>
+        			</div>
+					<div class="row">
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-default" id="get_info">Get Info!</button>
+						</div>
+					</div>
+				</form>
 			</div>
 		</div>
-	</body>
+
+	</div>
+
+	<!-- jQuery -->
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+	<script>
+	var images = new Array();
+	var curImage = 0;
+
+	$(document).ready(function() {
+
+		$("#get_info").click(function(e) {
+			e.preventDefault();
+			$('#url_info').css("display", "none");
+			$("#url_error").css("display", "none");
+			$("#url_loading").css("display", "");
+
+			$.ajax({
+				type : "POST",
+				url : "urlinfo.php",
+				dataType : "json",
+				data : $("#form_url").serialize()
+			}).done(function(msg) {
+
+				if (msg.error === undefined) {
+
+                    console.log(msg);
+
+					$("#url_title").html(msg.title);
+					$("#url_description").html(msg.description);
+					$("#url_keywords").html(msg.keywords.join(", "));
+
+                    $("#images_div").html("");
+                    for (var i = 0; i < msg.images.length; i++) {
+            			$("#images_div").append('<img src="' + msg.images[i] + '" class="img-thumbnail" style="max-width: 135px; max-height: 135px;">');
+            		}
+                    console.log("End");
+					$("#url_loading").css("display", "none");
+					$("#url_error").css("display", "none");
+					$("#url_info").css("display", "");
+
+				} else {
+					$("#url_loading").css("display", "none");
+					$("#url_info").css("display", "none");
+					$("#error_msg").html(msg.error + "...");
+					$("#url_error").css("display", "");
+				}
+			});
+		});
+	});
+	</script>
+</body>
 </html>
