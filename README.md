@@ -1,4 +1,4 @@
-# URLExtractor #
+# URLExtractor v0.2 #
 
 PHP Class to extract images and meta data information from URLs
 
