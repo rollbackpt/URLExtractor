@@ -3,8 +3,7 @@
 require_once '../src/UrlExtractor.php';
 
 if (isset($_POST['url']) && !empty($_POST['url'])) {
-
-	$urlExtractor = new UrlExtractor($_POST['url']);
+    $urlExtractor = new \rollbackpt\UrlExtractor($_POST['url']);
 	echo $urlExtractor->extractAll();
 
 /*

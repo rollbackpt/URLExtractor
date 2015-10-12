@@ -6,7 +6,7 @@ PHP Class to extract images and meta data information from URLs
 
 ```php
 require_once "src/UrlExtractor.php";
-$urlExtractor = new UrlExtractor("http://some-url.com");
+$urlExtractor = new \rollbackpt\UrlExtractor("http://some-url.com");
 echo $urlExtractor->extractAll();
 ```
 
