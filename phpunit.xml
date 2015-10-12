@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="tests/Bootstrap.php"
+		colors="true"
+		convertErrorsToExceptions="true"
+		convertNoticesToExceptions="true"
+		convertWarningsToExceptions="true"
+		stopOnFailure="false"
+        verbose="true">
+    <testsuites>
+        <testsuite name="UrlExtractor">
+            <directory>./tests/UrlExtractorTest</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
