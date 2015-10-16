@@ -14,7 +14,7 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
         );
 
         $urlExtractor = new \rollbackpt\UrlExtractor();
-        $urlData = $urlExtractor->extractAll(dirname(__FILE__) . "/test_website.html", false);
+        $urlData = $urlExtractor->extractAll("file://" . dirname(__FILE__) . "/test_website.html", false);
         $this->assertEquals($urlData, $expectedData);
     }
 }

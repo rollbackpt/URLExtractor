@@ -3,14 +3,25 @@
 /**
 * Class UrlExtractor
 *
-* @package \rollbackpt\UrlExtractor
-* @author  João Ribeiro
+* PHP version 4
+*
+* @category Utilities
+* @package  UrlExtractor
+* @author   Joao Ribeiro <joaopedrocr@gmail.com>
+* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @link     http://urlextractor.joaoperibeiro.com
 */
 
 namespace rollbackpt;
 
 /**
 * PHP Class to extract images and meta data information from URLs.
+*
+* @category Utilities
+* @package  UrlExtractor
+* @author   Joao Ribeiro <joaopedrocr@gmail.com>
+* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @link     http://urlextractor.joaoperibeiro.com
 *
 * @TODO: Extract thumbnails from videos
 * @TODO: Split the code into smaller classes (One to handle meta tags
@@ -21,6 +32,12 @@ namespace rollbackpt;
 
 class UrlExtractor
 {
+    /*
+     * Use this const to define if you want to use curl or file_get_contents to
+     * get the url contents
+     */
+    const CURL = true;
+
     /**
     * URL passed as a parameter in construct
     *
@@ -128,7 +145,11 @@ class UrlExtractor
         $this->images = array();
 
         // Get the url contents for extraction
-        $urlContent = @file_get_contents($this->url);
+        if (self::CURL) {
+            $urlContent = $this->curlGetContents($this->url);
+        } else {
+            $urlContent = @file_get_contents($this->url);
+        }
 
         if ($urlContent !== false) {
             $this->getHost($this->url);
@@ -164,6 +185,7 @@ class UrlExtractor
     * is the host extracted from http://localhost.com/test/index.php)
     *
     * @param string $url
+    *
     * @return void
     */
     protected function getHost($url)
@@ -181,6 +203,7 @@ class UrlExtractor
     * Get the text inside the title tag
     *
     * @param string $urlContent
+    *
     * @return void
     */
     protected function getPageTitle($urlContent)
@@ -193,13 +216,18 @@ class UrlExtractor
     *
     * Get the regular meta tags (Description, keywords, etc..)
     *
-    * @param string $url
+    * @param string $url Url to get meta tags from
+    *
     * @return void
+    *
+    * @TODO: Change get_meta_tags to Regex
     */
     protected function getMetaTagsByName($url)
     {
-        $metaTags = get_meta_tags($this->url);
-        $this->setUrlAtributes($metaTags);
+        $metaTags = @get_meta_tags($this->url);
+        if ($metaTags !== false) {
+            $this->setUrlAtributes($metaTags);
+        }
     }
 
     /**
@@ -209,6 +237,7 @@ class UrlExtractor
     * (Ex: <meta property="og:title" content="The Rock" />)
     *
     * @param string $urlContent
+    *
     * @return void
     */
     protected function getMetaTagsByProperty($urlContent)
@@ -231,6 +260,7 @@ class UrlExtractor
     * Get the images from the URL
     *
     * @param string $urlContent
+    *
     * @return void
     */
     protected function getImages($urlContent)
@@ -254,6 +284,7 @@ class UrlExtractor
     * (Ex: Description, Keywords)
     *
     * @param string $metaTags
+    *
     * @return void
     */
     protected function setUrlAtributes($metaTags)
@@ -291,6 +322,7 @@ class UrlExtractor
     * setUrlAtributes
     *
     * @param array $array
+    *
     * @return array|boolean Returns the array with the meta tags found or false
     * in case of not founding any meta tags
     */
@@ -315,7 +347,8 @@ class UrlExtractor
     * Utility function used by getImages to check image URL
     * and complete relative URLs
     *
-    * @param string $url
+    * @param string $url Url of the image to be checked
+    *
     * @return string Image url
     */
     protected function checkImageUrl($url)
@@ -343,6 +376,7 @@ class UrlExtractor
     * @param string $text
     * @param string $start
     * @param string $end
+    *
     * @return string The text extracted
     */
     protected function getText($text, $start, $end)
@@ -369,6 +403,37 @@ class UrlExtractor
             }
         }
         return trim($string, "|");
+    }
+
+    /**
+     * Function curlGetContents
+     *
+     * Same as file_get_contents but using curl to avoid getting error 403
+     * forbidden because the request doesn't have a valid user agent
+     *
+     * @param string $url Url to get the contents from using Curl
+     *
+     * @return string $output Contents obtained from the url
+     */
+    protected function curlGetContents($url)
+    {
+        // create curl resource
+        $ch = curl_init();
+
+        // set url
+        curl_setopt($ch, CURLOPT_URL, $url);
+
+        //return the transfer as a string
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.13) Gecko/20080311 Firefox/2.0.0.13');
+
+        // $output contains the output string
+        $output = curl_exec($ch);
+
+        // close curl resource to free up system resources
+        curl_close($ch);
+
+        return $output;
     }
 }
 
