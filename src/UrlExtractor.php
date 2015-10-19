@@ -151,14 +151,17 @@ class UrlExtractor
             $urlContent = @file_get_contents($this->url);
         }
 
+        // Avoid errors in the Regex matcher because of glued metatags
+        $urlContent = str_replace("<meta", "\n<meta", $urlContent);
+
         if ($urlContent !== false) {
             $this->getHost($this->url);
 
+            $this->getMetaTagsByProperty($urlContent);
+
             $this->getPageTitle($urlContent);
 
-            $this->getMetaTagsByName($this->url);
-
-            $this->getMetaTagsByProperty($urlContent);
+            $this->getMetaTagsByName($urlContent);
 
             $this->getImages($urlContent);
 
@@ -202,13 +205,13 @@ class UrlExtractor
     *
     * Get the text inside the title tag
     *
-    * @param string $urlContent
+    * @param string $urlContent Page content to get the title from
     *
     * @return void
     */
     protected function getPageTitle($urlContent)
     {
-        $this->title = $this->getText($urlContent, "<title>", "</title");
+        $this->title = $this->getText($urlContent, "<title>", "</title>");
     }
 
     /**
@@ -222,9 +225,14 @@ class UrlExtractor
     *
     * @TODO: Change get_meta_tags to Regex
     */
-    protected function getMetaTagsByName($url)
+    protected function getMetaTagsByName($urlContent)
     {
-        $metaTags = @get_meta_tags($this->url);
+        $pattern = '/<meta.*?name=["|\'](description|keywords)["|\'][^<]*?content=["|\'](.*?)["|\'].*?>|<meta.*?content=["|\'](.*?)["|\'][^<]*?name=["|\'](description|keywords)["|\'].*?>/i';
+
+        preg_match_all($pattern, $urlContent, $results);
+
+        $metaTags = $this->formatMetaTagsArray($results);
+
         if ($metaTags !== false) {
             $this->setUrlAtributes($metaTags);
         }
@@ -242,8 +250,7 @@ class UrlExtractor
     */
     protected function getMetaTagsByProperty($urlContent)
     {
-        $pattern = '/<meta.*?property=["|\'](.*?)["|\'][^<]*?content=["|\'](.*?)["|\'].*?>|';
-        $pattern .= '<meta.*?content=["|\'](.*?)["|\'][^<]*?property=["|\'](.*?)["|\'].*?>/i';
+        $pattern = '/<meta.*?property=["|\'](.*?)["|\'][^<]*?content=["|\'](.*?)["|\'].*?>|<meta.*?content=["|\'](.*?)["|\'][^<]*?property=["|\'](.*?)["|\'].*?>/i';
 
         preg_match_all($pattern, $urlContent, $results);
 
@@ -328,7 +335,7 @@ class UrlExtractor
     */
     protected function formatMetaTagsArray($array)
     {
-        $pattern = '/^og:.*/i';
+        $pattern = '/^(' . $this->getPropertyRuleString() . ')/i';
         foreach ($array as $key => $value) {
             if (preg_grep($pattern, $value)) {
                 if ($key%2 == 0) {
