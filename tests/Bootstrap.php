@@ -1,3 +1,3 @@
 <?php
 
-require_once(dirname(__FILE__) . "/../src/UrlExtractor.php");
+require_once(dirname(__FILE__) . "/../src/rollbackpt/UrlExtractor/UrlExtractor.php");

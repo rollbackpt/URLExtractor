@@ -1,0 +1,25 @@
+{
+    "name": "rollbackpt/url-extractor",
+    "description": "PHP Class to extract images and meta data information from URLs",
+    "type": "library",
+    "keywords": ["url","metatags", "metadata"],
+    "homepage": "http://urlextractor.joaoperibeiro.com/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Joao Ribeiro",
+            "email": "joaopedrocr@gmail.com",
+            "homepage": "http://joaoperibeiro.com",
+            "role": "Developer"
+        }
+    ],
+    "minimum-stability": "beta",
+    "require": {
+        "ext-curl": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "rollbackpt\\UrlExtractor\\": "src"
+        }
+    }
+}

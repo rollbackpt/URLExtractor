@@ -12,7 +12,7 @@
 * @link     http://urlextractor.joaoperibeiro.com
 */
 
-namespace rollbackpt;
+namespace rollbackpt\UrlExtractor;
 
 /**
 * PHP Class to extract images and meta data information from URLs.

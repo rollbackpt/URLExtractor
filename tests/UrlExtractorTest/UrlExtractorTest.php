@@ -13,7 +13,7 @@ class UrlExtractorTest extends PHPUnit_Framework_TestCase
             "images" => array(0 => "https://avatars0.githubusercontent.com/u/2725826?v=3&amp;s=400")
         );
 
-        $urlExtractor = new \rollbackpt\UrlExtractor();
+        $urlExtractor = new \rollbackpt\UrlExtractor\UrlExtractor();
         $urlData = $urlExtractor->extractAll("file://" . dirname(__FILE__) . "/test_website.html", false);
         $this->assertEquals($urlData, $expectedData);
     }
