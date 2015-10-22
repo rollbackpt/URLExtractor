@@ -13,7 +13,7 @@
             "role": "Developer"
         }
     ],
-    "minimum-stability": "beta",
+    "minimum-stability": "stable",
     "require": {
         "ext-curl": "*"
     },
