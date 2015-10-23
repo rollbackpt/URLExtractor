@@ -21,5 +21,8 @@
         "psr-0": {
             "rollbackpt\\UrlExtractor\\": "src"
         }
+    },
+    "archive": {
+        "exclude": ["tests", "docs", "demo", "*phpunit.xml"]
     }
 }
