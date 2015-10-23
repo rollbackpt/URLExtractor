@@ -13,6 +13,7 @@
             "role": "Developer"
         }
     ],
+    "minimum-stability": "stable",
     "require": {
         "ext-curl": "*"
     },
@@ -22,6 +23,6 @@
         }
     },
     "archive": {
-        "exclude": ["/tests", "/docs", "/demo", "/*phpunit.xml"]
+        "exclude": ["tests", "docs", "demo", "*phpunit.xml"]
     }
 }
