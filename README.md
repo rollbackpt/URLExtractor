@@ -1,9 +1,15 @@
-# URLExtractor v0.2 #
+# URLExtractor v1.0 #
 
 PHP Class to extract images and meta data information from URLs
 
 **Usage**
 
+With composer:
+```shell
+composer require rollbackpt/url-extractor:1.0
+```
+
+... or manually:
 ```php
 require_once 'src/rollbackpt/UrlExtractor/UrlExtractor.php';
 $urlExtractor = new \rollbackpt\UrlExtractor\UrlExtractor();
