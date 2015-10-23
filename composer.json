@@ -22,6 +22,6 @@
         }
     },
     "archive": {
-        "exclude": ["tests", "docs", "demo", "*phpunit.xml"]
+        "exclude": ["/tests", "/docs", "/demo", "/*phpunit.xml"]
     }
 }
