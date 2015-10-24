@@ -219,11 +219,9 @@ class UrlExtractor
     *
     * Get the regular meta tags (Description, keywords, etc..)
     *
-    * @param string $url Url to get meta tags from
+    * @param string $urlContent Url content to get meta tags from
     *
     * @return void
-    *
-    * @TODO: Change get_meta_tags to Regex
     */
     protected function getMetaTagsByName($urlContent)
     {
@@ -244,7 +242,7 @@ class UrlExtractor
     * Get property meta tags like open graph for example
     * (Ex: <meta property="og:title" content="The Rock" />)
     *
-    * @param string $urlContent
+    * @param string $urlContent Url content to get meta tags from
     *
     * @return void
     */
