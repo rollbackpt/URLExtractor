@@ -19,7 +19,7 @@
   <body>
     <header>
       <div class="inner">
-        <h1>Urlextractor v0.2</h1>
+        <h1>Urlextractor</h1>
         <h2>PHP Class to extract images and meta data information from URLs</h2>
         <a href="https://github.com/rollbackpt/URLExtractor" class="button"><small>View project on</small> GitHub</a>
       </div>
@@ -29,21 +29,29 @@
       <div class="inner clearfix">
         <section id="main-content">
           <h1>
-<a id="urlextractor-v02" class="anchor" href="#urlextractor-v02" aria-hidden="true"><span class="octicon octicon-link"></span></a>URLExtractor v0.2</h1>
+<a id="urlextractor-v100" class="anchor" href="#urlextractor-v100" aria-hidden="true"><span class="octicon octicon-link"></span></a>URLExtractor v1.0.0</h1>
 
 <p>PHP Class to extract images and meta data information from URLs</p>
 
 <p><strong>Usage</strong></p>
 
-<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">require_once</span> <span class="pl-s"><span class="pl-pds">"</span>src/UrlExtractor.php<span class="pl-pds">"</span></span>;</span>
-<span class="pl-s1"><span class="pl-smi">$urlExtractor</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\rollbackpt\</span><span class="pl-c1">UrlExtractor</span>();</span>
+<p>With composer:</p>
+
+<div class="highlight highlight-source-shell"><pre>composer require rollbackpt/url-extractor</pre></div>
+
+<p>... or manually:</p>
+
+<div class="highlight highlight-text-html-php"><pre><span class="pl-s1"><span class="pl-k">require_once</span> <span class="pl-s"><span class="pl-pds">'</span>src/rollbackpt/UrlExtractor/UrlExtractor.php<span class="pl-pds">'</span></span>;</span>
+<span class="pl-s1"><span class="pl-smi">$urlExtractor</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-c1">\rollbackpt\UrlExtractor\</span><span class="pl-c1">UrlExtractor</span>();</span>
 <span class="pl-s1"><span class="pl-c1">echo</span> <span class="pl-smi">$urlExtractor</span><span class="pl-k">-&gt;</span>extractAll(<span class="pl-s"><span class="pl-pds">"</span>http://some-url.com<span class="pl-pds">"</span></span>);</span></pre></div>
 
 <p><strong>Documentation</strong></p>
 
-<p>Check out the documentation <a href="docs/classes/rollbackpt.UrlExtractor.html" target="_blank">here</a>.</p>
+<p>Check out the documentation <a href="http://rollbackpt.github.io/URLExtractor/docs/classes/rollbackpt.UrlExtractor.html">here</a>.</p>
 
 <p><strong>Demo Screenshots</strong></p>
+
+<p>Test the demo here: <a href="http://urlextractor.joaoperibeiro.com/demo/index.html">http://urlextractor.joaoperibeiro.com/demo/index.html</a></p>
 
 <p><img src="http://s21.postimg.org/63lvd5b3r/Screenshot_from_2015_10_12_22_26_53.png" alt="urlextractor1">
 <img src="http://s21.postimg.org/40bg5hbav/Screenshot_from_2015_10_12_22_27_07.png" alt="urlextractor2">
@@ -78,6 +86,6 @@
       </div>
     </div>
 
-
+  
   </body>
 </html>
