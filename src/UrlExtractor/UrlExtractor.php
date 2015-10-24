@@ -3,7 +3,7 @@
 /**
 * Class UrlExtractor
 *
-* PHP version 4
+* PHP version 5
 *
 * @category Utilities
 * @package  UrlExtractor

@@ -1,6 +1,6 @@
 <?php
 
-require_once '../src/rollbackpt/UrlExtractor/UrlExtractor.php';
+require_once '../src/UrlExtractor/UrlExtractor.php';
 
 if (isset($_POST['url']) && !empty($_POST['url'])) {
     $urlExtractor = new \rollbackpt\UrlExtractor\UrlExtractor();

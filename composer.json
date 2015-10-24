@@ -13,13 +13,12 @@
             "role": "Developer"
         }
     ],
-    "minimum-stability": "stable",
     "require": {
         "ext-curl": "*"
     },
     "autoload": {
-        "psr-0": {
-            "rollbackpt\\UrlExtractor\\": "src"
+        "psr-4": {
+            "rollbackpt\\UrlExtractor\\": "src/UrlExtractor/"
         }
     },
     "archive": {
