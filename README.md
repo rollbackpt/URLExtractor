@@ -11,7 +11,7 @@ composer require rollbackpt/url-extractor
 
 ... or manually:
 ```php
-require_once 'src/rollbackpt/UrlExtractor/UrlExtractor.php';
+require_once 'src/UrlExtractor/UrlExtractor.php';
 $urlExtractor = new \rollbackpt\UrlExtractor\UrlExtractor();
 echo $urlExtractor->extractAll("http://some-url.com");
 ```
