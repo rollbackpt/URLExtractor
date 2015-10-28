@@ -8,7 +8,7 @@
 * @category Utilities
 * @package  UrlExtractor
 * @author   Joao Ribeiro <joaopedrocr@gmail.com>
-* @license  http://www.gnu.org/copyleft/gpl.html GNU General Public License
+* @license  https://opensource.org/licenses/MIT MIT License
 * @link     http://urlextractor.joaoperibeiro.com
 */
 
