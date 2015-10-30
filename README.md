@@ -1,5 +1,7 @@
 # URLExtractor v1.0.0 #
 
+![travis-build](https://api.travis-ci.org/rollbackpt/URLExtractor.svg?branch=master)
+
 PHP Class to extract images and meta data information from URLs
 
 **Usage**
